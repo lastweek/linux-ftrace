@@ -10,7 +10,7 @@ void getcpu(int *cpu, int *node)
 	ret = syscall(SYS_getcpu, cpu, node, NULL);
 }
 
-#define NR_PAGES 10000
+#define NR_PAGES 1000000ULL
 
 int oneg(void)
 {
