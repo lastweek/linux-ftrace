@@ -13,7 +13,7 @@ int main(int argc, char **argv)
 	char *line;
 	size_t line_sz;
 	long nr;
-	double total;
+	double total, max;
 
 	if (argc != 2)
 		die("Usage: ./parse_trace.o trace_file_path");
@@ -31,18 +31,25 @@ int main(int argc, char **argv)
 
 	nr = 0;
 	total = 0;
+	max = 0;
 	while (getline(&line, &line_sz, fp) != -1) {
 		double tmp;
 		int nr_matched;
 
 		nr_matched = sscanf(line, "%lf\n", &tmp);
 		if (nr_matched > 0) {
+			if (tmp > 5)
+				continue;
+
 			total += tmp;
 			nr++;
+
+			if (tmp > max)
+				max = tmp;
 		}
 	}
 
-	printf("Total: %lf us, nr %d, avg %lf us\n",
-		total, nr, total/nr);
+	printf("Max: %lf Total: %lf us, nr %d. avg %lf us\n",
+		max, total, nr, total/nr);
 	return 0;
 }
