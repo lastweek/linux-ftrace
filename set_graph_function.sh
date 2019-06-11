@@ -2,16 +2,17 @@ set -e
 
 DIR=/sys/kernel/debug/tracing
 
+# Presetup if any
+./prepare.sh
+
 # Disable tracing and clear trace
 echo 0 > $DIR/tracing_on
 echo > $DIR/trace
+echo > $DIR/set_ftrace_filter
 echo > $DIR/set_graph_function
 
 # Setup tracer type
 echo function_graph > $DIR/current_tracer
-
-# Setup cpumask if any
-echo 800000 > $DIR/tracing_cpumask
 
 #echo __do_page_fault >> $DIR/set_graph_function
 #echo handle_mm_fault >> $DIR/set_graph_function

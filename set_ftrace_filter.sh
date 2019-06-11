@@ -3,6 +3,9 @@ set -e
 
 DIR=/sys/kernel/debug/tracing
 
+# Presetup if any
+./prepare.sh
+
 # Disable tracing and clear trace
 echo 0 > $DIR/tracing_on
 echo > $DIR/trace
@@ -13,24 +16,26 @@ echo > $DIR/set_graph_function
 echo function_graph > $DIR/current_tracer
 #echo irqsoff > $DIR/current_tracer
 
-# Setup cpumask if any
-echo 800000 > $DIR/tracing_cpumask
-
 ##
 # Top-level pgfault functions
 # - handle_mm_fault() could come from faultin_page()
 # - __do_page_fault() could come from copy_from/to_user()
 # - That means, not everything comes from userspace as expected.
 #
-#echo __do_page_fault >> $DIR/set_ftrace_filter
+#echo xperf_profile* >> $DIR/set_ftrace_filter
 #echo  hugetlb_fault >> $DIR/set_ftrace_filter
-#echo  __handle_mm_fault >> $DIR/set_ftrace_filter
+echo  __handle_mm_fault >> $DIR/set_ftrace_filter
 
 ##
 # cgroup-related
-#echo      mem_cgroup_try_charge_delay >> $DIR/set_ftrace_filter
-#echo      mem_cgroup_commit_charge >> $DIR/set_ftrace_filter
-echo      try_to_free_mem_cgroup_pages >> $DIR/set_ftrace_filter
+echo      mem_cgroup_try_charge_delay >> $DIR/set_ftrace_filter
+echo      mem_cgroup_commit_charge >> $DIR/set_ftrace_filter
+echo      mem_cgroup_cancel_charge >> $DIR/set_ftrace_filter
+#echo      try_to_free_mem_cgroup_pages >> $DIR/set_ftrace_filter
+#echo      pageout* >> $DIR/set_ftrace_filter
+#echo      try_to_unmap* >> $DIR/set_ftrace_filter
+#echo      try_to_unmap_flush >> $DIR/set_ftrace_filter
+
 
 ##
 # do_anonymous_page()

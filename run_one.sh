@@ -23,4 +23,4 @@ sleep 1
 #
 #/usr/bin/time ./src/file.o ./src/tmpfs/5
 #./src/file.o ./src/5
-lxc-execute -n test -s lxc.cgroup.memory.limit_in_bytes=1G ./src/anonymous.o
+lxc-execute -n test -s lxc.cgroup.memory.limit_in_bytes=256M ./src/anonymous.o
