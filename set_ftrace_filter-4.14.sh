@@ -1,3 +1,7 @@
+#
+# Note: this is written for kernel 4.14
+#
+
 set -x
 set -e
 
@@ -28,14 +32,22 @@ echo  __handle_mm_fault >> $DIR/set_ftrace_filter
 
 ##
 # cgroup-related
-echo      mem_cgroup_try_charge_delay >> $DIR/set_ftrace_filter
-echo      mem_cgroup_commit_charge >> $DIR/set_ftrace_filter
-echo      mem_cgroup_cancel_charge >> $DIR/set_ftrace_filter
+#
+#echo      mem_cgroup_try_charge_delay >> $DIR/set_ftrace_filter
+#echo      mem_cgroup_commit_charge >> $DIR/set_ftrace_filter
+#echo      mem_cgroup_cancel_charge >> $DIR/set_ftrace_filter
 #echo      try_to_free_mem_cgroup_pages >> $DIR/set_ftrace_filter
 #echo      pageout* >> $DIR/set_ftrace_filter
 #echo      try_to_unmap* >> $DIR/set_ftrace_filter
 #echo      try_to_unmap_flush >> $DIR/set_ftrace_filter
 
+##
+# rmap related
+#
+#echo     page_add_file_rmap >> $DIR/set_ftrace_filter
+#echo     page_add_new_anon_rmap >> $DIR/set_ftrace_filter
+#echo     do_page_add_anon_rmap >> $DIR/set_ftrace_filter
+#echo     __anon_vma_prepare >> $DIR/set_ftrace_filter
 
 ##
 # do_anonymous_page()
@@ -43,23 +55,20 @@ echo      mem_cgroup_cancel_charge >> $DIR/set_ftrace_filter
 #  - First Read will use the zero_page, not interesting.
 #
 #echo    do_anonymous_page >> $DIR/set_ftrace_filter
-#echo      __anon_vma_prepare >> $DIR/set_ftrace_filter
-#echo      alloc_pages_vma >> $DIR/set_ftrace_filter
-#echo      page_add_new_anon_rmap >> $DIR/set_ftrace_filter
-#echo      mem_cgroup_try_charge_delay >> $DIR/set_ftrace_filter
-#echo      mem_cgroup_commit_charge >> $DIR/set_ftrace_filter
-#echo      lru_cache_add_active_or_unevictable >> $DIR/set_ftrace_filter
+echo      alloc_pages_vma >> $DIR/set_ftrace_filter
+echo      lru_cache_add_active_or_unevictable >> $DIR/set_ftrace_filter
 
 ##
-# Fault on file-mmap
+# file-mmap
+#
 #echo    __do_fault >> $DIR/set_ftrace_filter
 #echo        submit_bio >> $DIR/set_ftrace_filter
 #echo        ext4_filemap_fault >> $DIR/set_ftrace_filter
 #echo        ext4_readpage >> $DIR/set_ftrace_filter
 #echo        ext4_readpages >> $DIR/set_ftrace_filter
 
-echo    __mm_populate >> $DIR/set_ftrace_filter
-echo    get_user_pages* >> $DIR/set_ftrace_filter
+#echo    __mm_populate >> $DIR/set_ftrace_filter
+#echo    get_user_pages* >> $DIR/set_ftrace_filter
 
 #echo    do_swap_page >> $DIR/set_ftrace_filter
 #echo    do_wp_page >> $DIR/set_ftrace_filter
