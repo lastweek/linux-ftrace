@@ -13,4 +13,4 @@ clean:
 	rm -f *.o
 
 %.o: %.c includeme.h
-	gcc -g -o $@ $< -lm -pthread
+	gcc -ggdb -o $@ $< -lm -pthread

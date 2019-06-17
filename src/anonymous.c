@@ -33,6 +33,15 @@ int oneg(void)
 		*bar = 100;
 		//printf("%10d %#lx\n", i, bar);
 	}
+#if 0
+	for (i = 0; i < NR_PAGES; i++) {
+		int *bar, cut;
+
+		bar = foo + PAGE_SIZE * i;
+		cut = *bar;
+		//printf("%10d %#lx\n", i, bar);
+	}
+#endif
 	gettimeofday(&te, NULL);
 	timeval_sub(&result, &te, &ts);
 
@@ -63,7 +72,7 @@ int main(void)
 	pin_cpu(23);
 
 	getcpu(&cpu, &node);
-	printf("cpu: %d, node: %d\n", cpu, node);
+	printf("cpu: %d, node: %d, nr_pages: %lu\n", cpu, node, NR_PAGES);
 
 	oneg();
 }
