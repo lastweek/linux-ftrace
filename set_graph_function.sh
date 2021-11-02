@@ -3,7 +3,7 @@ set -e
 DIR=/sys/kernel/debug/tracing
 
 # Presetup if any
-./prepare.sh
+# ./prepare.sh
 
 # Disable tracing and clear trace
 echo 0 > $DIR/tracing_on
@@ -20,7 +20,8 @@ echo function_graph > $DIR/current_tracer
 # cgroup-related
 #echo mem_cgroup_try_charge_delay >> $DIR/set_graph_function
 #echo mem_cgroup_commit_charge >> $DIR/set_graph_function
-echo try_to_free_mem_cgroup_pages >> $DIR/set_graph_function
+
+#echo alloc_workqueue >> $DIR/set_graph_function
 
 echo "Enabled graph functions:"
 cat $DIR/set_graph_function

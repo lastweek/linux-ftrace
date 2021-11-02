@@ -8,7 +8,7 @@ set -e
 DIR=/sys/kernel/debug/tracing
 
 # Presetup if any
-./prepare.sh
+# ./prepare.sh
 
 # Disable tracing and clear trace
 echo 0 > $DIR/tracing_on
@@ -19,6 +19,10 @@ echo > $DIR/set_graph_function
 # Setup tracer type
 echo function_graph > $DIR/current_tracer
 #echo irqsoff > $DIR/current_tracer
+
+#
+# In the following lines, select the functions you wish to trace.
+#
 
 ##
 # Top-level pgfault functions
@@ -55,8 +59,8 @@ echo  __handle_mm_fault >> $DIR/set_ftrace_filter
 #  - First Read will use the zero_page, not interesting.
 #
 #echo    do_anonymous_page >> $DIR/set_ftrace_filter
-echo      alloc_pages_vma >> $DIR/set_ftrace_filter
-echo      lru_cache_add_active_or_unevictable >> $DIR/set_ftrace_filter
+#echo      alloc_pages_vma >> $DIR/set_ftrace_filter
+#echo      lru_cache_add_active_or_unevictable >> $DIR/set_ftrace_filter
 
 ##
 # file-mmap
